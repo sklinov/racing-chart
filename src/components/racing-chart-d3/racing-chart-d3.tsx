@@ -8,7 +8,7 @@ import {
   axisTop,
   axisBottom,
 } from "d3";
-import { DataFormat } from "../racing-chart/racing-chart";
+import { DataFormat } from "./racing-chart-d3-wrapper";
 import { useResizeObserver } from "../../utils/resizingTool";
 import { getRegionColor } from "../../utils";
 import css from "./racing-chart-d3.module.scss";
@@ -88,11 +88,12 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .join("rect")
       .attr("fill", (entry) => getRegionColor(entry.region))
       .attr("class", "bar")
-      .style('z-index', '5')
       .attr("x", LABEL_WIDTH)
+      .attr("rx", 5)
+      .attr("ry", 5)
       .attr("height", yScale.bandwidth())
       .transition()
-      .attr("duration", "200")
+      // .attr("duration", "200")
       .attr("width", (entry) => xScale(entry.data))
       .attr("y", (entry) => yScale(entry.item) as number)
       .ease(easeLinear);
@@ -105,11 +106,11 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .text((entry) =>
         Number(entry.data).toLocaleString("ch-CH", { useGrouping: true })
       )
+      .attr("fill", (entry) => getRegionColor(entry.region))
       .attr("class", css.label)
       .attr("x", (entry) => xScale(entry.data) + LABEL_WIDTH + 10)
       .transition()
-      .attr("duration", "200")
-
+      // .attr("duration", "200")
       .attr(
         "y",
         (entry, index) =>
@@ -126,7 +127,7 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .attr("class", css.countryLabel)
       .attr("x", (entry) => xScale(entry.data))
       .transition()
-      .attr("duration", "200")
+      // .attr("duration", "200")
       .attr(
         "y",
         (entry, index) =>
@@ -154,7 +155,7 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
   return (
     <div
       ref={wrapperRef}
-      style={{ width: "800px", height: "600px", margin: "20px auto" }}
+      style={{ width: "800px", height: "600px", margin: "20px" }}
     >
       <svg ref={svgRef}></svg>
     </div>

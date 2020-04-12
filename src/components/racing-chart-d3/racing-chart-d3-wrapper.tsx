@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import population from "../../data/population.json";
 import css from "./racing-chart-d3.module.scss";
 import { RacingBarChartD3 } from "./racing-chart-d3";
@@ -43,8 +43,7 @@ const TOP: number = 10;
 const populationData: PopFormat = JSON.parse(JSON.stringify(population));
 
 export const RacingChartD3Wrapper = () => {
-  const [currentYear, setCurrentYear] = useState<number>(INITIAL_YEAR);
-  const [dataMax, setDataMax] = useState<number>(0);
+  const [currentYear, setCurrentYear] = useState<number>(INITIAL_YEAR);;
   const [data, setData] = useState<DataFormat[]>(initialData);
 
   const getTitle = () => {
@@ -56,7 +55,7 @@ export const RacingChartD3Wrapper = () => {
 
   useEffect(() => {
     if (currentYear < FINAL_YEAR) {
-      setTimeout(() => setCurrentYear(currentYear + 1), 150);
+      setTimeout(() => setCurrentYear(currentYear + 1), 180);
     }
   }, [currentYear]);
 
@@ -73,15 +72,12 @@ export const RacingChartD3Wrapper = () => {
       .sort((a, b) => b.data - a.data)
       .slice(0, TOP);
     setData(data);
-    setDataMax(Math.max(...data.map((item) => item.data)));
   }, [currentYear]);
 
   return (
     <>
-    <div className={css.headerContainer} >
       <h1 className={css.header}>{getTitle()}</h1>
       <h1 className={css.currentYear}>{currentYear}</h1>
-    </div>
       <RacingBarChartD3 data={data} />
     </>
   );

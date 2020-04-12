@@ -9,7 +9,7 @@ export const getRegionColor = (region: string) => {
       case "Europe":
           return "#66bb6a";
       case "Asia":
-          return "#ffee58";
+          return "#ff8f00";
       default:
           return "#b0bec5";
   }

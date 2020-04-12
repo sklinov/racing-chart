@@ -1,7 +1,6 @@
 import React from 'react'
 import { visualization } from '../../data/population.json';
 import { ChartType } from '../../constants';
-import { RacingChart } from '../racing-chart/racing-chart';
 import { NotSupported } from '../not-supported/not-supported';
 import { RacingChartD3Wrapper } from '../racing-chart-d3/racing-chart-d3-wrapper';
 
