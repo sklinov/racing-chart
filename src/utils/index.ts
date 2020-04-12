@@ -1,16 +1,16 @@
 export const getRegionColor = (region: string) => {
   switch (region) {
       case "Africa":
-          return "#212121";
+          return "#bdbdbd";
       case "Americas":
-          return "#d32f2f";
+          return "#ef5350";
       case "Oceania":
-          return "#1565c0";
+          return "#29b6f6";
       case "Europe":
-          return "#2e7d32";
+          return "#66bb6a";
       case "Asia":
-          return "#ffeb3b";
+          return "#ffee58";
       default:
-          return "#424242";
+          return "#b0bec5";
   }
 };
