@@ -18,6 +18,7 @@ export interface RacingBarChartD3Props {
 }
 
 const LABEL_WIDTH = 100;
+const TICK_SIZE = -10;
 
 export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
   const { data } = props;
@@ -44,7 +45,7 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .domain([0, Math.max(...data.map((item) => item.data))])
       .range([LABEL_WIDTH, dimensions.width - LABEL_WIDTH]);
 
-    svg.attr("viewBox", "0 0 800 640");
+    
 
     const keyF: ValueFn<any, any, string> = function (
       this,
@@ -54,6 +55,8 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
     ) {
       return entry.item;
     };
+
+    svg.attr("viewBox", "0 0 800 640");
 
     svg.style("background-color", "#fafafa").style("padding", "20px");
     
@@ -66,18 +69,16 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .attr("class", "x-axis")
       .attr("transform", "translate(0,20)")
       .style("font-size", "12")
-      .call(axisTop(xAxisScale).ticks(5).tickSize(-10))
+      .call(axisTop(xAxisScale).ticks(5).tickSize(TICK_SIZE))
       .selectAll("text")
       .attr("fill", "#9e9e9e")
-      .selectAll('.tick')
-      .style('opacity','0.5');
     
       svg
       .append("g")
       .attr("class", "x-axis-bottom")
       .attr("transform", `translate(0,${dimensions.height+20})`)
       .style("font-size", "0")
-      .call(axisBottom(xAxisScale).ticks(5).tickSize(-10))
+      .call(axisBottom(xAxisScale).ticks(5).tickSize(TICK_SIZE))
       .selectAll("text")
       .attr("fill", "#9e9e9e")
 
@@ -93,7 +94,6 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .attr("ry", 5)
       .attr("height", yScale.bandwidth())
       .transition()
-      // .attr("duration", "200")
       .attr("width", (entry) => xScale(entry.data))
       .attr("y", (entry) => yScale(entry.item) as number)
       .ease(easeLinear);
@@ -110,7 +110,6 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .attr("class", css.label)
       .attr("x", (entry) => xScale(entry.data) + LABEL_WIDTH + 10)
       .transition()
-      // .attr("duration", "200")
       .attr(
         "y",
         (entry, index) =>
@@ -127,7 +126,6 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
       .attr("class", css.countryLabel)
       .attr("x", (entry) => xScale(entry.data))
       .transition()
-      // .attr("duration", "200")
       .attr(
         "y",
         (entry, index) =>
@@ -150,14 +148,13 @@ export const RacingBarChartD3 = (props: RacingBarChartD3Props) => {
 
   }, [data, dimensions]);
 
-  
-
   return (
     <div
       ref={wrapperRef}
       style={{ width: "800px", height: "600px", margin: "20px" }}
+      data-testid="svgWrapper" 
     >
-      <svg ref={svgRef}></svg>
+      <svg ref={svgRef} data-testid="svgChart"></svg>
     </div>
   );
 };
